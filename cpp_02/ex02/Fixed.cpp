@@ -74,5 +74,132 @@ std::ostream &operator<<(std::ostream &os, const Fixed &nbr)
 	return (os);
 }
 
-
 /*New content since last exercise*/
+
+bool	Fixed::operator>(const Fixed &rhs) const
+{
+	if (this->_bitValue > rhs.getRawBits())
+		return (true);
+	else
+		return (false);
+}
+
+bool	Fixed::operator<(const Fixed &rhs) const
+{
+	if (this->_bitValue < rhs.getRawBits())
+		return (true);
+	else
+		return (false);
+}
+
+bool	Fixed::operator>=(const Fixed &rhs) const
+{
+	if (this->_bitValue >= rhs.getRawBits())
+		return (true);
+	else
+		return (false);
+}
+
+bool	Fixed::operator<=(const Fixed &rhs) const
+{
+	if (this->_bitValue <= rhs.getRawBits())
+		return (true);
+	else
+		return (false);
+}
+
+bool	Fixed::operator==(const Fixed &rhs) const
+{
+	if (this->_bitValue == rhs.getRawBits())
+		return (true);
+	else
+		return (false);
+}
+
+bool	Fixed:: operator!=(const Fixed &rhs) const
+{
+	if (this->_bitValue != rhs.getRawBits())
+		return (true);
+	else
+		return (false);
+}
+
+Fixed	Fixed::operator+(const Fixed &rhs) const
+{
+	return Fixed(this->toFloat() + rhs.toFloat());
+}
+
+Fixed	Fixed::operator-(const Fixed &rhs) const
+{
+	return Fixed(this->toFloat() - rhs.toFloat());
+}
+
+Fixed	Fixed::operator*(const Fixed &rhs) const
+{
+	return Fixed(this->toFloat() * rhs.toFloat());
+}
+
+Fixed	Fixed::operator/(const Fixed &rhs) const
+{
+	return Fixed(this->toFloat() / rhs.toFloat());
+}
+
+Fixed	Fixed::operator++(int)
+{
+	Fixed temp(*this);
+
+	this->_bitValue++;
+	return (temp);
+}
+
+Fixed	&Fixed::operator++(void)
+{
+	this->_bitValue++;
+	return (*this);
+}
+
+Fixed	Fixed::operator--(int)
+{
+	Fixed temp(*this);
+
+	this->_bitValue--;
+	return (temp);
+}
+
+Fixed	&Fixed::operator--(void)
+{
+	this->_bitValue--;
+	return (*this);
+}
+
+Fixed	&Fixed::min(Fixed &lhs, Fixed &rhs)
+{
+	if (lhs < rhs)
+		return (lhs);
+	else
+		return (rhs);
+}
+
+const Fixed	&Fixed::min(const Fixed &lhs, const Fixed &rhs)
+{
+	if (lhs < rhs)
+		return (lhs);
+	else
+		return (rhs);
+}
+
+Fixed	&Fixed::max(Fixed &lhs, Fixed &rhs)
+{
+	if (lhs > rhs)
+		return (lhs);
+	else
+		return (rhs);
+}
+
+const Fixed	&Fixed::max(const Fixed &lhs, const Fixed &rhs)
+{
+	if (lhs > rhs)
+		return (lhs);
+	else
+		return (rhs);
+}
