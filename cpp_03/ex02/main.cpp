@@ -12,6 +12,7 @@
 
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int	main(void)
 {
@@ -27,17 +28,25 @@ int	main(void)
 	ScavTrap	testScav;
 	ScavTrap	copyScav(scavOne);
 
-	std::cout << std:: endl;
-	std::cout << "testScav name before copy assignment is: " << testScav.getName() << std::endl;
 	testScav = scavTwo;
-	std::cout << std:: endl;
-	std::cout << "scavOne name is: " << scavOne.getName() << std::endl;
-	std::cout << "scavTwo name is: " << scavTwo.getName() << std::endl;
-	std::cout << "testScav name is: " << testScav.getName() << std::endl;
-	std::cout << "copyScav name is: " << copyScav.getName() << std::endl;
+
+	FragTrap	fragOne("Sleepy");
+	FragTrap	fragTwo("Cranky");
+	FragTrap	testFrag;
+	FragTrap	copyFrag(fragOne);
+
 
 	std::cout << std:: endl;
-	std::cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * " << std:: endl;
+	std::cout << "testFrag name before copy assignment is: " << testFrag.getName() << std::endl;
+	testFrag = fragTwo;
+	std::cout << std:: endl;
+	std::cout << "fragOne name is: " << fragOne.getName() << std::endl;
+	std::cout << "fragTwo name is: " << fragTwo.getName() << std::endl;
+	std::cout << "testFrag name is: " << testFrag.getName() << std::endl;
+	std::cout << "copyFrag name is: " << copyFrag.getName() << std::endl;
+
+	std::cout << std:: endl;
+	std::cout << "* * * * * * * * * * * * * * * * * * CLAP * * * * * * * * * * * * * * * * * * * * " << std:: endl;
 	std::cout << std:: endl;
 
 	clapOne.attack("Jerry");
@@ -71,9 +80,9 @@ int	main(void)
 	clapOne.beRepaired(1);
 
 	std::cout << std:: endl;
-	std::cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * " << std:: endl;
+	std::cout << "* * * * * * * * * * * * * * * * * * * SCAV * * * * * * * * * * * * * * * * * * * * " << std:: endl;
 	std::cout << std:: endl;
-	scavOne.attack("Redbeard");
+	scavOne.attack(scavTwo.getName());
 	scavTwo.takeDamage(scavTwo.getAttackDamage());
 	std::cout << "ScavTrap " << scavTwo.getName() << " hitpoints: " << scavTwo.getHitPoints() << ", energy points " << scavTwo.getEnergyPoints() << std:: endl;
 	std::cout << std:: endl;
@@ -84,7 +93,7 @@ int	main(void)
 	std::cout << "ScavTrap " << scavTwo.getName() << " goes on a rampage!" << std::endl;
 	for (int i = 0; i < 6; i++)
 	{
-		scavTwo.attack("Blackbeard");
+		scavTwo.attack(scavOne.getName());
 		scavOne.takeDamage(scavTwo.getAttackDamage());
 	}
 	scavOne.beRepaired(1);
@@ -94,5 +103,30 @@ int	main(void)
 	std::cout << "ScavTrap " << scavTwo.getName() << " hitpoints: " << scavTwo.getHitPoints() << ", energy points " << scavTwo.getEnergyPoints() << std:: endl;
 	std::cout << std:: endl;
 
+	std::cout << std:: endl;
+	std::cout << "* * * * * * * * * * * * * * * * * * * * FRAG * * * * * * * * * * * * * * * * * * * " << std:: endl;
+	std::cout << std:: endl;
+
+	fragOne.attack(fragTwo.getName());
+	fragTwo.takeDamage(fragTwo.getAttackDamage());
+	std::cout << "FragTrap " << fragTwo.getName() << " hitpoints: " << fragTwo.getHitPoints() << ", energy points " << fragTwo.getEnergyPoints() << std:: endl;
+	std::cout << "FragTrap " << fragOne.getName() << " hitpoints: " << fragOne.getHitPoints() << ", energy points " << fragOne.getEnergyPoints() << std:: endl;
+	std::cout << std:: endl;
+
+	std::cout << "FragTrap " << fragTwo.getName() << " goes on a rampage!" << std::endl;
+	for (int i = 0; i < 5; i++)
+	{
+		fragTwo.attack(fragOne.getName());
+		fragOne.takeDamage(fragTwo.getAttackDamage());
+	}
+	fragOne.beRepaired(1);
+	fragOne.attack("Redbeard");
+	fragOne.highFivesGuys();
+	std::cout << "FragTrap " << fragOne.getName() << " hitpoints: " << fragOne.getHitPoints() << ", energy points " << fragOne.getEnergyPoints() << std:: endl;
+	std::cout << "FragTrap " << fragTwo.getName() << " hitpoints: " << fragTwo.getHitPoints() << ", energy points " << fragTwo.getEnergyPoints() << std:: endl;
+	std::cout << std:: endl;
+	fragTwo.highFivesGuys();
+	std::cout << std:: endl;
 	return (0);
 }
+
