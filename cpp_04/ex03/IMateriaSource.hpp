@@ -15,6 +15,7 @@
 
 #include "AMateria.hpp"
 
+/* Interface given in subject */
 class IMateriaSource
 {
 	public:

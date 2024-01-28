@@ -17,8 +17,6 @@
 
 class Cure : public AMateria
 {
-	private:
-		std::string	_type; //init as cure
 	public:
 		Cure();
 		Cure(const Cure &src);

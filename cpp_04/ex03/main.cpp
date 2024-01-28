@@ -15,7 +15,6 @@
 #include "Character.hpp"
 #include "MateriaSource.hpp"
 
-
 int main()
 {
 	std::cout << std::endl;
@@ -35,7 +34,7 @@ int main()
 		me->equip(tmp);
 
 		ICharacter* bob = new Character("bob");
-		
+
 		me->use(0, *bob);
 		me->use(1, *bob);
 		delete bob;
@@ -44,3 +43,13 @@ int main()
 	}
 		return 0;
 }
+
+
+/*
+Missing
+Character.hpp
+Character.cpp
+main.cpp
+
+Thrash stuff
+*/

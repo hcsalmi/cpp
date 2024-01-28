@@ -17,7 +17,8 @@
 
 class MateriaSource : public IMateriaSource
 {
-	//private??protected something? type?
+	private:
+		AMateria	*_materias[4];
 
 	public:
 		MateriaSource();
@@ -26,7 +27,7 @@ class MateriaSource : public IMateriaSource
 		~MateriaSource();
 
 		void learnMateria(AMateria*);
-		AMateria* createMateria(std::string const & type);
+		AMateria* createMateria(std::string const &type);
 };
 
 #endif

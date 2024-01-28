@@ -14,12 +14,13 @@
 #define CHARACTER_HPP
 
 #include "ICharacter.hpp"
+#include "AMateria.hpp"
 
 class Character : public ICharacter
 {
 	private:
 		std::string _name;
-		MateriaSource _inventory[4];		//possibly correct
+		AMateria *_inventory[4]; //can store objects of derived classes of AMateria
 	public:
 		Character();
 		Character(std::string name);

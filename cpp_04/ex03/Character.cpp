@@ -12,23 +12,32 @@
 
 #include "Character.hpp"
 
-Character::Character(): _name("")	//joku init tahan?
+Character::Character(): _name("")
 {
 	std::cout << "Character default constructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		_inventory[i] = nullptr;
+	}
 }
 
-Character::Character(std::string name)
+Character::Character(std::string name): _name(name)
 {
 	std::cout << "Character name constructor called" << std::endl;
-	this->_name = name;
-	//inventory
+	for (int i = 0; i < 4; i++)
+	{
+		_inventory[i] = nullptr;
+	}
 }
 
 Character::Character(const Character &src)
 {
 	std::cout << "Character copy constructor called" << std::endl;
 	this->_name = src._name;
-	//inventory
+	for (int i = 0; i < 4; i++)
+	{
+		_inventory[i] = src._inventory[i];
+	}
 }
 
 Character &Character::operator=(const Character &src)
@@ -37,7 +46,10 @@ Character &Character::operator=(const Character &src)
 	if (this != &src)
 	{
 		this->_name = src._name;
-		//inventory
+		for (int i = 0; i < 4; i++)
+		{
+			_inventory[i] = src._inventory[i];
+		}
 	}
 	return (*this);
 }
@@ -45,7 +57,6 @@ Character &Character::operator=(const Character &src)
 Character::~Character()
 {
 	std::cout << "Character destructor called" << std::endl;
-	//where freeing?
 }
 
 std::string const &Character::getName() const

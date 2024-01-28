@@ -16,13 +16,10 @@
 #include "ICharacter.hpp"
 #include <iostream>
 
-
-//katso mitka tulee virtual ja const
-
 class AMateria
 {
 	protected:
-		//insert stuff here, type?
+		std::string	_type;
 
 	public:
 		AMateria();
@@ -31,7 +28,7 @@ class AMateria
 		AMateria &operator=(const AMateria &src);
 		~AMateria();
 
-		std::string const &getType() const;	//Returns the materia type
+		std::string const &getType() const;
 		virtual AMateria* clone() const = 0;
 		virtual void use(ICharacter &target);
 };

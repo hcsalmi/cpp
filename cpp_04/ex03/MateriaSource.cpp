@@ -15,12 +15,19 @@
 MateriaSource::MateriaSource()
 {
 	std::cout << "MateriaSource default constructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		_materias[i] = nullptr; //allocate in cure and ice
+	}
 }
 
 MateriaSource::MateriaSource(const MateriaSource &src)
 {
 	std::cout << "MateriaSource copy constructor called" << std::endl;
-	//copy stuff here
+	for (int i = 0; i < 4; i++)
+	{
+		_materias[i] = src._materias[i]; //allocate in cure and ice
+	}
 }
 
 MateriaSource &MateriaSource::operator=(const MateriaSource &src)
@@ -28,7 +35,10 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &src)
 	std::cout << "MateriaSource copy assignment operator called" << std::endl;
 	if (this != &src)
 	{
-		//copy stuff here
+		for (int i = 0; i < 4; i++)
+		{
+			_materias[i] = src._materias[i]; //allocate in cure and ice
+		}
 	}
 	return (*this);
 }
@@ -36,14 +46,45 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &src)
 MateriaSource::~MateriaSource()
 {
 	std::cout << "MateriaSource destructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->_materias[i] != nullptr)
+			delete (this->_materias[i]);
+	}
 }
 
-void learnMateria(AMateria*)
+void MateriaSource::learnMateria(AMateria *newMateria)
 {
+	int	i = 0;
 
+	while (i < 4)
+	{
+		if (this->_materias[i] != nullptr)
+			i++;
+		else
+		{
+			this->_materias[i] = newMateria;
+			return ;
+		}
+	}
+	std::cout << "Cannot learn more materia" << std::endl;
 }
 
-AMateria *createMateria(std::string const &type)
+AMateria *MateriaSource::createMateria(std::string const &type)
 {
+	int	i = 0;
 
+	if (type == "unknown materia")
+		return (0);
+	while (i < 4)
+	{
+		if (this->_materias[i]->getType() != type)
+			i++;
+		else
+		{
+			return (this->_materias[i]->clone());
+		}
+	}
+	std::cout << "Failed to create materia" << std::endl;
+	return (0);
 }
