@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ICharacter.hpp                                     :+:      :+:    :+:   */
+/*   Discard.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsalmi <lsalmi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 18:16:20 by lsalmi            #+#    #+#             */
-/*   Updated: 2024/01/26 18:16:21 by lsalmi           ###   ########.fr       */
+/*   Created: 2024/01/29 18:58:33 by lsalmi            #+#    #+#             */
+/*   Updated: 2024/01/29 18:58:35 by lsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ICHARACTER_HPP
-#define ICHARACTER_HPP
+#include "Discard.hpp"
 
-#include "AMateria.hpp"
-#include <string>
-
-class AMateria;
-
-/* Interface given in subject */
-class ICharacter
+Discard::Discard() : _materia(nullptr), _next(nullptr)	//what to do with head here? _head(this)
 {
-	public:
-		virtual ~ICharacter() {}
-		virtual std::string const &getName() const = 0;
-		virtual void equip(AMateria *m) = 0;
-		virtual void unequip(int idx) = 0;
-		virtual void use(int idx, ICharacter &target) = 0;
-};
+	std::cout << "Discard default constructor called" << std::endl;
+	this->_head = this;
+}
 
-#endif
+Discard::Discard(AMateria *toDiscard) : _materia(toDiscard), _next(nullptr)
+{
+	//what to do with head here? Think of an implementation without the head?
+}
+
+

@@ -19,7 +19,7 @@ AMateria::AMateria() : _type("unknown materia")
 
 AMateria::AMateria(std::string const &type)
 {
-	std::cout << "AMateria of type  " << type << " was constructed" << std::endl;
+	std::cout << "AMateria of type " << type << " was constructed" << std::endl;
 	this->_type = type;
 }
 

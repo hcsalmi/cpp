@@ -64,6 +64,7 @@ void MateriaSource::learnMateria(AMateria *newMateria)
 		else
 		{
 			this->_materias[i] = newMateria;
+			std::cout << "Materia of type " << this->_materias[i]->getType() << " learned" << std::endl;
 			return ;
 		}
 	}

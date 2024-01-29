@@ -43,7 +43,7 @@ Cure* Cure::clone() const
 	return (new Cure());
 }
 
-void use(ICharacter &target)
+void Cure::use(ICharacter &target)
 {
 	std::cout << "* Heals " << target.getName() << "'s wounds * " << std:: endl;
 }

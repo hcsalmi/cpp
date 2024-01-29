@@ -20,7 +20,7 @@ class Character : public ICharacter
 {
 	private:
 		std::string _name;
-		AMateria *_inventory[4]; //can store objects of derived classes of AMateria
+		AMateria *_inventory[4];	//stores objects of derived classes of AMateria
 	public:
 		Character();
 		Character(std::string name);
