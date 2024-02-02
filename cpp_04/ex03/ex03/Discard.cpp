@@ -48,19 +48,19 @@ Discard &Discard::operator=(const Discard &src)
 
 Discard::~Discard()
 {
+
 }
 
 void Discard::add(AMateria *materia)
 {
-	Discard *temp;
-
-	temp = _head;
 	if (_head == nullptr)
 	{
 		_head = new Discard(materia);
 	}
 	else
 	{
+		Discard *temp;
+		temp = _head;
 		while (temp->_next != nullptr)
 		{
 			if (materia == temp->_materia)
@@ -72,6 +72,7 @@ void Discard::add(AMateria *materia)
 		temp->_next = new Discard(materia);
 	}
 }
+
 /*
 void Trash::emptyTrash()
 {

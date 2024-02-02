@@ -46,13 +46,15 @@ Character::Character(const Character &src) : _trash(nullptr)
 Character &Character::operator=(const Character &src)
 {
 	std::cout << "Character copy assignment operator called" << std::endl;
-	if (this != &src)
+	if (this == &src)
+		return (*this);
+	this->_name = src._name;
+	for (int i = 0; i < 4; i++)
 	{
-		this->_name = src._name;
-		for (int i = 0; i < 4; i++)
-		{
+		delete _inventory[i];
+		_inventory[i] = nullptr;
+		if (src._inventory[i] != nullptr)
 			_inventory[i] = src._inventory[i]->clone();
-		}
 	}
 	return (*this);
 }
@@ -68,7 +70,8 @@ Character::~Character()
 			_inventory[i] = nullptr;
 		}
 	}
-	//delete trash stuff
+	delete _trash;
+
 }
 
 std::string const &Character::getName() const
@@ -80,7 +83,7 @@ void Character::equip(AMateria *m)
 {
 	if (m == nullptr)
 	{
-		std::cout << "Cannot equip nonexistent materia." << std::endl;
+		std::cout << "\e[0;31mCannot equip nonexistent materia.\e[0m" << std::endl;
 		return ;
 	}
 	for (int i = 0; i < 4; i++)
@@ -88,32 +91,32 @@ void Character::equip(AMateria *m)
 		if (this->_inventory[i] == nullptr)
 		{
 			this->_inventory[i] = m;
-			std::cout << "Equipped " << m->getType() << " in slot " << i << std::endl;
+			std::cout << this->_name << " equipped " << m->getType() << " in slot " << i << std::endl;
 			return ;
 		}
 	}
-	std::cout << "Cannot equip. No space in inventory" << std::endl;
+	std::cout << "\e[0;31mCannot equip. No space in inventory\e[0m" << std::endl;
+	delete m;
 }
 
 void Character::unequip(int idx)
 {
-	AMateria *toDiscard;
+//	AMateria *toDiscard;
 
-
-//	std::cout << _inventory[idx]->getType() << " in slot " << idx << std::endl;
 	if ((idx < 0 || idx > 3) || this->_inventory[idx] == nullptr)
 		return ;
 	std::cout << this->_name << " unequips " << _inventory[idx]->getType() << " from slot " << idx << std::endl;
-	toDiscard = _inventory[idx];
-	_inventory[idx] = nullptr;					///memory management?
-	_trash->add(toDiscard);
+//	toDiscard = _inventory[idx];
+	_trash->add(_inventory[idx]);
+	_inventory[idx] = nullptr;
+
 }
 
 void Character::use(int idx, ICharacter &target)
 {
 	if ((idx < 0 || idx > 3) || this->_inventory[idx] == nullptr)
 	{
-		std::cout << _name << " has no materia to use on " << target.getName() << " in slot " << idx << std::endl;
+		std::cout << _name << " \e[0;31mhas no materia to use on \e[0m" << target.getName() << " in slot " << idx << std::endl;
 		return ;
 	}
 	this->_inventory[idx]->use(target);

@@ -17,7 +17,7 @@ MateriaSource::MateriaSource()
 	std::cout << "MateriaSource default constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
-		_materias[i] = nullptr; //allocate in cure and ice
+		_materias[i] = nullptr;
 	}
 }
 
@@ -26,7 +26,7 @@ MateriaSource::MateriaSource(const MateriaSource &src)
 	std::cout << "MateriaSource copy constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
-		_materias[i] = src._materias[i]; //allocate in cure and ice
+		_materias[i] = src._materias[i];
 	}
 }
 
@@ -37,7 +37,7 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &src)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			_materias[i] = src._materias[i]; //allocate in cure and ice
+			_materias[i] = src._materias[i];
 		}
 	}
 	return (*this);
@@ -68,7 +68,8 @@ void MateriaSource::learnMateria(AMateria *newMateria)
 			return ;
 		}
 	}
-	std::cout << "Cannot learn more materia" << std::endl;
+	std::cout << "\e[0;31mCannot learn more materia\e[0m" << std::endl;
+	delete newMateria;
 }
 
 AMateria *MateriaSource::createMateria(std::string const &type)
@@ -86,6 +87,6 @@ AMateria *MateriaSource::createMateria(std::string const &type)
 			return (this->_materias[i]->clone());
 		}
 	}
-	std::cout << "Failed to create materia" << std::endl;
+	std::cout << "\e[0;31mFailed to create materia\e[0m" << std::endl;
 	return (0);
 }

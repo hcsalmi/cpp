@@ -28,8 +28,6 @@ class Discard
 		Discard	&operator=(const Discard &src);
 		~Discard();
 		void	add(AMateria *toDiscard);
-//empty trash?
-
 };
 
 #endif
