@@ -14,25 +14,30 @@
 #define FORM_HPP
 
 #include "Bureaucrat.hpp"
+#include <iostream>
+
+class Bureaucrat;
 
 class Form
 {
 	private:
 		const std::string	_name;
-		bool				_signed;
 		const int			_gradeToSign;
 		const int			_gradeToExecute;
+		bool				_signed;
 
 	public:
 		Form();
 		Form(const Form &src);
+		Form(const std::string name, const int gradeToSign, const int gradeToExecute);
 		Form &operator=(const Form &src);
 		~Form();
 
 		std::string	getName() const;
 		bool		getSignedStatus() const;
-		const int	getGradetoSign() const;
-		const int	getGradetoExecute() const;
+		int			getGradetoSign() const;
+		int			getGradetoExecute() const;
+
 		void		beSigned(const Bureaucrat &bureaucrat);
 
 		class GradeTooLowException : public std::exception {
@@ -43,6 +48,11 @@ class Form
 		class GradeTooHighException : public std::exception {
 			public:
 				const char *what(void) const throw() { return "Grade too high"; }
+		};
+
+		class FormAlreadySignedException : public std::exception {
+			public:
+				const char *what(void) const throw() { return "Form already signed"; }
 		};
 };
 

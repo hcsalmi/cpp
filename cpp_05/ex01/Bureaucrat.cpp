@@ -17,7 +17,7 @@ Bureaucrat::Bureaucrat() : _name("anonymous"), _grade(150)
 	std::cout << "Default Bureaucrat was constructed" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
+Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name)
 {
 	if (grade < 1)
 		throw GradeTooHighException();
@@ -46,7 +46,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &src)
 
 Bureaucrat::~Bureaucrat()
 {
-	std::cout << "Bureaucrat destructor called" << std::endl;
+	std::cout << "\e[0;31mBureaucrat destructor called\e[0m" << std::endl;
 }
 
 std::string	Bureaucrat::getName() const
@@ -84,6 +84,20 @@ void	Bureaucrat::incrementGrade()
 		throw GradeTooHighException();
 	}
 }
+
+void	Bureaucrat::signForm(Form &form)
+{
+	try
+	{
+		form.beSigned(*this);
+		std:: cout << "\e[0;36m" << this->_name << " signed " << form.getName() << "\e[0m" << std::endl;
+	}
+	catch(const std::exception &e)
+	{
+		std::cout << "\e[0;31m" << this->_name << " couldn't sign " << form.getName() << " because: " << e.what() << "\e[0m" << std::endl;
+	}
+}
+
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat)
 {
