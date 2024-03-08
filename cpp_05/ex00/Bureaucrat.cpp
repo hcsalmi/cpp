@@ -17,7 +17,7 @@ Bureaucrat::Bureaucrat() : _name("anonymous"), _grade(150)
 	std::cout << "Default Bureaucrat was constructed" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
+Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name)
 {
 	if (grade < 1)
 		throw GradeTooHighException();
@@ -83,14 +83,6 @@ void	Bureaucrat::incrementGrade()
 	{
 		throw GradeTooHighException();
 	}
-}
-
-void	Bureaucrat::signForm()
-{
-//	<bureaucrat> signed <form>
-
-//	Otherwise, it will print something like:
-//	<bureaucrat> couldn’t sign <form> because <reason>.
 }
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat)
