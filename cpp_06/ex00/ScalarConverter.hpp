@@ -16,12 +16,12 @@
 #include <iostream>
 #include <float.h>
 
-# define	RED			"\033[0;31m"
-# define	GREEN		"\033[0;32m"
-# define	BLUE		"\033[0;34m"
-# define	MAG			"\033[0;35m"
-# define	CYAN		"\036[0;35m"
-# define	COLRESET	"\033[0m"
+# define	RED			"\e[0;31m"
+# define	GREEN		"\e[0;32m"
+# define	BLUE		"\e[0;34m"
+# define	MAG			"\e[0;35m"
+# define	CYAN		"\e[0;36m"
+# define	COLRESET	"\e[0m"
 
 class ScalarConverter
 {
@@ -32,6 +32,13 @@ class ScalarConverter
 		static bool	isFloat(const std::string &literal);
 		static bool	isDouble(const std::string &literal);
 		static bool	isPseudoLit(const std::string &literal);
+
+		static void	print(long double value);
+		static void	printChar(char ch);
+		static void	printInt(int i, long double value);
+		static void	printFloat(float f, long double value);
+		static void	printDouble(double d, long double value);
+		static void	printPseudoLit(const std::string &literal);
 
 	public:
 		ScalarConverter();
