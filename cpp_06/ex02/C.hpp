@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Base.hpp                                           :+:      :+:    :+:   */
+/*   C.hpp                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsalmi <lsalmi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 14:49:01 by lsalmi            #+#    #+#             */
-/*   Updated: 2024/03/22 14:49:05 by lsalmi           ###   ########.fr       */
+/*   Created: 2024/03/22 14:51:30 by lsalmi            #+#    #+#             */
+/*   Updated: 2024/03/22 14:51:32 by lsalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASE_HPP
-#define BASE_HPP
+#ifndef C_HPP
+#define C_HPP
 
-#include <iostream>
+#include "Base.hpp"
 
-# define	RED			"\e[0;31m"
-# define	GREEN		"\e[0;32m"
-# define	MAG			"\e[0;35m"
-# define	CYAN		"\e[0;36m"
-# define	COLRESET	"\e[0m"
-
-class Base
+class C : public Base
 {
-	public:
-		virtual ~Base();
-};
 
-Base *generate(void);
-void identify(Base *p);
-void identify(Base &p);
+};
 
 #endif

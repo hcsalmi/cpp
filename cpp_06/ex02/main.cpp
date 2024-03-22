@@ -10,4 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Base.hpp"
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
 
+int main()
+{
+	Base *type;
+
+	std::cout << std::endl;
+	std::cout << GREEN << "Generating base..." << COLRESET << std::endl;
+	type = generate();
+	std::cout << CYAN << "Identifying base (pointer)..." << COLRESET << std::endl;
+	identify(type);
+	std::cout << MAG << "Identifying base (reference)..." << COLRESET << std::endl;
+	identify(*type);
+	delete type;
+	return (0);
+}
