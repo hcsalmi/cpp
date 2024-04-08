@@ -12,3 +12,13 @@
 
 #include "Array.hpp"
 
+
+/*
+{
+		for (int i = 0; i < n; i++)
+		{
+			array[i] = nullptr;
+		}
+	};
+
+*/
