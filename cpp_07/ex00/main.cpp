@@ -18,7 +18,7 @@ int main( void )
 	std::cout << std::endl;
 	int a = 2;
 	int b = 3;
-	::swap( a, b );
+	::swap(a, b);
 
 	std::cout << "\e[0;36m" << "a = " << a << ", b = " << b << "\e[0m" << std::endl;
 	std::cout << "min(a, b) = " << ::min(a, b) << std::endl;

@@ -19,7 +19,7 @@ template <typename T>
 class Array
 {
 	private:
-		T 				*_array;
+		T				*_array;
 		unsigned int	_size;
 
 	public:
@@ -33,6 +33,16 @@ class Array
 		const T &operator[](unsigned int index) const;
 
 		unsigned int	size() const;
+
+		class OutOfRangeException : public std::exception {
+			public:
+				virtual const char *what(void) const throw() { return "Index out of range"; }
+	};
 };
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Array<T> &arr);
+
+#include "Array.tpp"
 
 #endif
