@@ -1,10 +1,11 @@
 
 #include "Span.hpp"
+#include <iostream>
 
 
 Span::Span(unsigned int n) : _size(n)
 {
-     std::cout << "Size constructor called" << std::endl;
+     std::cout << "Size constructor called for size " << n << std::endl;
 }
 
 Span::Span(const Span &src)
@@ -19,7 +20,7 @@ Span::~Span()
     std::cout << "Destructor called" << std::endl;
 }
 
-Span &operator=(const Span &src)
+Span &Span::operator=(const Span &src)
 {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &src)
@@ -30,27 +31,74 @@ Span &operator=(const Span &src)
     return (*this);
 }
 
-void addNumber(int n)
+void Span::addNumber(int n)
 {
-    if (this->_container.size() == this->_size)
+    if (this->_container.size() >= this->_size)
     {
         throw containerFullException();
     }
     else
+    {
         this->_container.push_back(n);
+        std::cout << "added number: " << n << std::endl;
+    }
 }
 
-void addNumbers()
+void Span::addNumbers(unsigned int amount)
 {
-
+    for (unsigned int i = 0; i < amount; i++)
+    {
+        if (this->_container.size() == this->_size)
+        {
+            throw containerFullException();
+        }
+        else
+        {
+            this->_container.push_back(i);  
+        }
+    }
 }
 
-unsigned int shortestSpan()
+unsigned int Span::shortestSpan()
 {
+    if (this->_container.size() < 2)
+        throw noSpanFoundException();
+    
+    std::vector<int> sorted = this->_container;
+    std::sort(sorted.begin(), sorted.end());
+    /*
+    for (auto it = sorted.begin(); it != sorted.end(); ++it)
+    {
+       std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+    */
 
+    unsigned int shortest = std::numeric_limits<unsigned int>::max();
+    for (unsigned int i = 0; i != sorted.size() - 1; ++i)
+    {
+        if (std::abs(sorted[i] - sorted[i + 1]) < shortest)
+        {
+            shortest = std::abs(sorted[i] - sorted[i + 1]);
+        }
+    }
+    return (shortest);
 }
 
-unsigned int longestSpan()
+unsigned int Span::longestSpan()
 {
+     if (this->_container.size() < 2)
+        throw noSpanFoundException();
 
+    std::vector<int> sorted = this->_container;
+    std::sort(sorted.begin(), sorted.end());
+    /*
+    for (auto it = sorted.begin(); it != sorted.end(); ++it)
+    {
+       std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+    */
+
+   return (std::abs(sorted.back() - sorted.front()));
 }

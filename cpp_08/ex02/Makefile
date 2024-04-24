@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = span
+NAME = mutantstack
 
-SRCS = main.cpp Span.cpp
+SRCS = main.cpp
 
 OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/,$(SRCS:.cpp=.o))

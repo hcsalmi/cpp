@@ -9,9 +9,10 @@
 # define	COLRESET	"\e[0m"
 
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include <limits>
 
-
-//why does the default constructor not need to be defined anywhere if it's private?
 
 class Span
 {
@@ -27,8 +28,8 @@ class Span
 
         Span &operator=(const Span &src);
 
-        void    addNumber();
-        void    addNumbers();
+        void    addNumber(int n);
+        void    addNumbers(unsigned int n);
 
         unsigned int    shortestSpan();
         unsigned int    longestSpan();
