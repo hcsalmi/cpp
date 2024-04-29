@@ -1,6 +1,5 @@
 #include "BitcoinExchange.hpp"
 
-
 BitcoinExchange::BitcoinExchange()
 {
 
@@ -8,12 +7,16 @@ BitcoinExchange::BitcoinExchange()
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &src)
 {
-
+    this->_database = src._database;
 }
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &src)
 {
-
+    if (this != &src)
+    {
+        this->_database = src._database;
+    }
+    return (*this);
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -23,35 +26,87 @@ BitcoinExchange::~BitcoinExchange()
 
 void    BitcoinExchange::calculateAndPrint(long double inputValue, long double dbPrice)
 {
-    //yks kertaa toinen
-    //pyorista
-    //printtaa stardard outille
+    std::cout << inputValue << " = " << inputValue * dbPrice << std::endl;
 }
 
-long double BitcoinExchange::findMatchInDatabase(std::string date)
+bool checkForLeapYear(int year)
+{
+	if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+		return (true);
+	return (false);
+}
+
+std::tm BitcoinExchange::stringToTm(const std::string &date)
+{
+    std::tm tm = {};
+    std::istringstream iss(date);
+    iss >> std::get_time(&tm, "%Y-%m-%d");
+    return (tm);
+}
+
+bool    BitcoinExchange::isInTheFuture(const std::string &date)
+{
+    std::tm dateAsTm = stringToTm(date);
+    std::time_t currentTime = std::time(nullptr);
+
+    std::tm *currentTm = std::localtime(&currentTime);
+
+    if (std::mktime(currentTm) - std::mktime(&dateAsTm) < 0)
+    {
+        return (true);
+    }
+    return (false);
+}
+
+bool    BitcoinExchange::validateDate(const std::string &date)
 {
     int year = std::stoi(date.substr(0, 4));
     int month = std::stoi(date.substr(5, 2));
     int day = std::stoi(date.substr(8, 2));
 
-    int minYear = std::stoi(_minDate.substr(0, 4)); // tulee vasta kun etsitaan input filen perusteella vastaavuutta
-    int minMonth = std::stoi(_minDate.substr(5, 2));
-    int minDay = std::stoi(_minDate.substr(8, 2));
-    
-//    if (year <= minYear && month <= minMonth && )
-    //katso ensin onko exact match
-    //funktio joka etsii mapista onko sita keyta -> palauttaa npos jos ei ole?
-    //jos ei, niin etsi edellinen (vrt. vuosi, kuukausi, paiva). Juoksuta alaspain kk, pva, vuosi kunnes loytyy?
-    //Paitsi jos ei olemassa vanhempaa (vrt. _minDate), palauta -1 tms.
-    //muuten palauta arvo
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (month == 0 || month > 12)
+        return (false);
+    if (checkForLeapYear(year) == true)
+		daysInMonth[1] = 29;
+    if (day > daysInMonth[month - 1])
+        return (false);
+    return (true);
 }
 
-void    BitcoinExchange::handleInputOutput(filename)
+long double BitcoinExchange::findMatchInDatabase(const std::string &date)
+{
+    std::tm dateAsTm = stringToTm(date);
+    std::tm firstEntry = stringToTm(this->_minDate);
+    if (std::mktime(&dateAsTm) < std::mktime(&firstEntry))
+    {
+        std::cout << "Error: no earlier entry in database" << std::endl;
+        return (-1);
+    }
+    
+    std::string match;
+    long double value;
+    for (auto it = this->_database.begin(); it != this->_database.end(); ++it)
+    {
+        std::tm databaseDate = stringToTm(it->first);
+        if (std::mktime(&databaseDate) <= std::mktime(&dateAsTm))
+        {
+            match = it->first;
+            value = it->second;
+        }
+        else
+            break ;
+    }
+    std::cout << match << " => ";
+    return (value);
+}
+
+void    BitcoinExchange::handleInputOutput(const std::string &filename)
 {
     std::ifstream file(filename);
     if (file.bad() || file.fail())
        throw InputFileErrorException();
-    
+
     std::string line;
     if (!std::getline(file, line))
     {
@@ -64,7 +119,7 @@ void    BitcoinExchange::handleInputOutput(filename)
         throw InputFileErrorException();
     }
 
-    std::regex format([0-9]{4}-[0-9]{2}-[0-9]{2} \\| ([0-9]+)(\\.[0-9]+)?);
+    std::regex format("([0-9]{4}-[0-9]{2}-[0-9]{2}) \\| ([0-9]+(?:\\.[0-9]+)?)");
     while (getline(file, line))
     {
         std::smatch match;
@@ -72,39 +127,26 @@ void    BitcoinExchange::handleInputOutput(filename)
 		{
             std::string date = match[1].str();
             long double inputValue = stold(match[2].str());
+
             if (!validateDate(date))
-                throw InputFileErrorException();
+            {
+                std::cout << "Error: invalid date" << std::endl;
+                continue ;
+            }
             if (inputValue > 1000)
-                throw InputFileErrorException();
+            {
+                std::cout << "Error: value exceeds maximum" << std::endl;
+                continue ;
+            }
             long double dbPrice = findMatchInDatabase(date);
+            if (dbPrice < 0)
+                continue ;
             calculateAndPrint(inputValue, dbPrice);
         }
         else
-            throw InputFileErrorException();
+            std::cout << "Error: value negative or line invalid format" << std::endl;;
     }
-}
 
-bool checkForLeapYear(int year)
-{
-	if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
-		return (true);
-	return (false);
-}
-
-bool    BitcoinExchange::validateDate(std::string date)
-{
-    int year = std::stoi(date.substr(0, 4));
-    int month = std::stoi(date.substr(5, 2));
-    int day = std::stoi(date.substr(8, 2));
-
-    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if (month == 0 || month > 12)
-        return (false);
-    if (checkForLeapYear(year) == true)
-		months[1] = 29;
-    if (daysInMonth[month - 1] > day)
-        return (false);
-    return (true);
 }
 
 void    BitcoinExchange::readDatabase()
@@ -126,7 +168,8 @@ void    BitcoinExchange::readDatabase()
     }
     
     bool minDateFlag = false;
-    std::regex format([0-9]{4}-[0-9]{2}-[0-9]{2},([0-9]+)(\\.[0-9]+)?)
+    std::regex format("([0-9]{4}-[0-9]{2}-[0-9]{2}),([0-9]+(?:\\.[0-9]+)?)");
+
     while (getline(file, line))
     {
         std::smatch match;
@@ -135,7 +178,9 @@ void    BitcoinExchange::readDatabase()
             std::string date = match[1].str();
             long double value = stold(match[2].str());
             if (!validateDate(date))
-                 throw DatabaseErrorException();
+                 throw InvalidContentException();
+            if (isInTheFuture(date) == true)
+                throw InvalidContentException();
             if (minDateFlag == false)
             {
                 _minDate = date;
@@ -144,10 +189,9 @@ void    BitcoinExchange::readDatabase()
             _database[date] = value;
         }
         else
-            throw DatabaseErrorException();
+            throw InvalidContentException();
     }
 }
-
 
 void BitcoinExchange::handleExchange(std::string filename)
 {
@@ -160,5 +204,4 @@ void BitcoinExchange::handleExchange(std::string filename)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-
 }
