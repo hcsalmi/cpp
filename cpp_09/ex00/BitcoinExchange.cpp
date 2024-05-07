@@ -2,7 +2,6 @@
 
 BitcoinExchange::BitcoinExchange()
 {
-
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &src)

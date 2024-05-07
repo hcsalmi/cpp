@@ -17,10 +17,11 @@ class BitcoinExchange
         void        readDatabase();
         void        handleInputOutput(const std::string &filename);
         bool        validateDate (const std::string &date);
+        std::tm     stringToTm(const std::string &date);
         bool        isInTheFuture(const std::string &date);
         long double findMatchInDatabase(const std::string &date);
         void        calculateAndPrint(long double inputValue, long double dbPrice);
-        std::tm     stringToTm(const std::string &date);
+
 
     public:
         BitcoinExchange();

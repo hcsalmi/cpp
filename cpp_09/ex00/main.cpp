@@ -4,8 +4,8 @@ int main(int argc, char **argv)
 {
     if (argc != 2)
     {
-        std::cout << "Error: please provide input file." << std::endl;
-        return (0);
+        std::cout << "Error: incorrect number of arguments. Usage: ./btc <filename>" << std::endl;
+        return (1);
     }
     BitcoinExchange btc;
     btc.handleExchange(argv[1]);
