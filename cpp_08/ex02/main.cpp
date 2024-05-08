@@ -16,7 +16,7 @@ int main()
         std::cout << "Pushed: 17" << std::endl;
 
         std::cout << "Current top element: " << mstack.top() << std::endl;
-        std::cout << "Removing top element" << std::endl;
+        std::cout << "Removing top element." << std::endl;
         mstack.pop();
         std::cout << std::endl;
         std::cout << "Stack size: " << mstack.size() << std::endl;
@@ -65,7 +65,7 @@ int main()
         std::cout << "Pushed: 17" << std::endl;
 
         std::cout << "Current top element: " << mstack.back() << std::endl;
-        std::cout << "Removing top element" << std::endl;
+        std::cout << "Removing top element." << std::endl;
         mstack.pop_back();
         std::cout << std::endl;
         std::cout << "Stack size: " << mstack.size() << std::endl;
@@ -102,6 +102,36 @@ int main()
             ++it2;
         }
     }
+
     std::cout << std::endl;
+    std::cout << "\e[0;32m" << "* * * * * Testing with string * * * * *" << "\e[0m" << std::endl;
+    {
+        MutantStack<std::string> mstack;
+
+        mstack.push("one");
+        std::cout << "Pushed: one" << std::endl;
+        mstack.push("two");
+        std::cout << "Pushed: two" << std::endl;
+        mstack.push("three");
+        std::cout << "Pushed: three" << std::endl;
+
+        std::cout << "Current top element: " << mstack.top() << std::endl;
+        std::cout << "Removing top element." << std::endl;
+        mstack.pop();
+        std::cout << std::endl;
+        std::cout << "Stack size: " << mstack.size() << std::endl;
+        std::cout << std::endl;
+
+        MutantStack<std::string>::iterator it = mstack.begin();
+		MutantStack<std::string>::iterator itend = mstack.end();
+
+        std::cout << "\e[0;36m" << "Iterating through the whole stack" << "\e[0m" << std::endl;
+        while (it != itend)
+        {
+            std::cout << *it << std::endl;
+            ++it;
+        }
+        std::cout << std::endl;
+    }
     return (0);
 }

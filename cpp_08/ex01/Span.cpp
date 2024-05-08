@@ -15,11 +15,6 @@ Span::Span(const Span &src)
     this->_container = src._container;
 }
 
-Span::~Span()
-{
-    std::cout << "Destructor called" << std::endl;
-}
-
 Span &Span::operator=(const Span &src)
 {
     std::cout << "Copy assignment operator called" << std::endl;
@@ -31,6 +26,11 @@ Span &Span::operator=(const Span &src)
     return (*this);
 }
 
+Span::~Span()
+{
+
+}
+
 void Span::addNumber(int n)
 {
     if (this->_container.size() >= this->_size)
@@ -40,7 +40,6 @@ void Span::addNumber(int n)
     else
     {
         this->_container.push_back(n);
-        std::cout << "added number: " << n << std::endl;
     }
 }
 
@@ -66,13 +65,6 @@ unsigned int Span::shortestSpan()
     
     std::vector<int> sorted = this->_container;
     std::sort(sorted.begin(), sorted.end());
-    /*
-    for (auto it = sorted.begin(); it != sorted.end(); ++it)
-    {
-       std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-    */
 
     unsigned int shortest = std::numeric_limits<unsigned int>::max();
     for (unsigned int i = 0; i != sorted.size() - 1; ++i)
@@ -87,18 +79,11 @@ unsigned int Span::shortestSpan()
 
 unsigned int Span::longestSpan()
 {
-     if (this->_container.size() < 2)
+    if (this->_container.size() < 2)
         throw noSpanFoundException();
 
     std::vector<int> sorted = this->_container;
     std::sort(sorted.begin(), sorted.end());
-    /*
-    for (auto it = sorted.begin(); it != sorted.end(); ++it)
-    {
-       std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-    */
 
-   return (std::abs(sorted.back() - sorted.front()));
+    return (std::abs(sorted.back() - sorted.front()));
 }
