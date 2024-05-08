@@ -7,6 +7,7 @@ BitcoinExchange::BitcoinExchange()
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &src)
 {
     this->_database = src._database;
+    this->_minDate = src._minDate;
 }
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &src)
@@ -14,6 +15,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &src)
     if (this != &src)
     {
         this->_database = src._database;
+        this->_minDate = src._minDate;
     }
     return (*this);
 }

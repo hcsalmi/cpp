@@ -2,9 +2,15 @@
 
 int main(int argc, char **argv)
 {
-    if (argc != 2)
+    if (argc != 2 || (argc == 2 && argv[1][0] == '\0'))
     {
-        std::cout << "Incorrect number of arguments. Usage: ./RPN <rpn math expression in quotes>" << std::endl;
+        std::cout << "Invalid arguments. Usage: ./RPN <rpn math expression in quotes>" << std::endl;
+        return (1);
+    }
+    std::string emptyTest(argv[1]);
+    if (emptyTest.find_first_not_of(" \t") == std::string::npos)
+    {
+        std::cout << "Invalid arguments. Usage: ./RPN <rpn math expression in quotes>" << std::endl;
         return (1);
     }
     RPN rpn;
@@ -12,16 +18,3 @@ int main(int argc, char **argv)
 
     return (0);
 }
-
-/*
-    8 9 * 9 - 9 - 9 - 4 - 1 +
-	Result: 42
-	
-    9 8 * 4 * 4 / 2 + 9 - 8 - 8 - 1 - 6 -
-    Result: 42
-	
-	1 2 * 2 / 2 + 5 * 6 - 1 3 * - 4 5 * * 8 / 
-	Result: 15
-
-    //./RPN "777+" cases with spaces
-*/

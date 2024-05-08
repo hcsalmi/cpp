@@ -24,7 +24,6 @@ RPN::~RPN()
 
 }
 
-
 void RPN::calculate(char op)
 {
     int second = _stack.top();
@@ -63,17 +62,25 @@ void RPN::calculate(char op)
     }
 }
 
-// add spaces btw numbers?
-// error msg for 777 +
 void    RPN::validateOperatePrint(std::string input)
 {
+    int count = 0;
+    for (unsigned long i = 0; i < input.size(); i++)
+    {
+        if (isdigit(input[i]))
+            count++;
+    }
+    if (count <= 1)
+        throw std::runtime_error("Too few numbers");
+    bool needSpace = false;
     for (unsigned int i = 0; i < input.size(); i++)
     {
         char c = input[i];
-        if (isdigit(c))
+        if (isdigit(c) && needSpace == false)
         {
             std::string nbStr = std::to_string(c - '0');
             this->_stack.push(stoi(nbStr));
+            needSpace = true;
         }
         else if (c == '+' || c == '-' || c == '*' || c == '/')
         {
@@ -84,9 +91,12 @@ void    RPN::validateOperatePrint(std::string input)
                 continue ;
         }
         else if (isspace(c))
+        {
+            needSpace = false;
             continue ;
+        }
         else
-            throw std::runtime_error("Invalid character");
+            throw std::runtime_error("Wrong format or invalid character");
     }
     if (this->_stack.size() == 1)
         std::cout << "Result: " << this->_stack.top() << std::endl;
@@ -94,29 +104,10 @@ void    RPN::validateOperatePrint(std::string input)
         throw std::runtime_error("Not enough operators");
 }
 
-/*
-void RPN::formatCheck(std::string &input)
-{
-    bool shouldBeSpace = false;
-    for(size_t i = 0; i < input.size(); i++)
-    {
-        if (shouldBeSpace)
-        {
-            if (input[i] != ' ' || input[i] != '\t')
-            {
-                throw std::runtime_error("Invalid format");
-            }
-        }
-        shouldBeSpace = !shouldBeSpace;
-    }
-}
-*/
-
 void    RPN::handleRpn(std::string input)
 {
     try
 	{
- //       formatCheck(input);
         validateOperatePrint(input);
 	}
 	catch(const std::exception& e)

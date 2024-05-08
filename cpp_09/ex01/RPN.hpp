@@ -9,7 +9,6 @@ class RPN
     private:
         std::stack<int>  _stack;
         
-        void    formatCheck(std::string &input);
         void    validateOperatePrint(std::string input);
         void    calculate(char op);
 
