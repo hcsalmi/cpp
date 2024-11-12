@@ -18,9 +18,9 @@
 class Discard
 {
 	private:
-		AMateria	*_materia;
-		Discard		*_next;
-		Discard		*_head;
+		AMateria		*_materia;
+		Discard			*_next;
+		static Discard	*_head;
 	public:
 		Discard();
 		Discard(AMateria *toDiscard);
@@ -28,7 +28,6 @@ class Discard
 		Discard	&operator=(const Discard &src);
 		~Discard();
 		void	add(AMateria *toDiscard);
-
 };
 
 #endif

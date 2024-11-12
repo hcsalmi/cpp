@@ -15,12 +15,14 @@
 
 #include "ICharacter.hpp"
 #include "AMateria.hpp"
+#include "Discard.hpp"
 
 class Character : public ICharacter
 {
 	private:
 		std::string _name;
-		AMateria *_inventory[4];	//stores objects of derived classes of AMateria
+		AMateria *_inventory[4];
+		Discard	 *_trash;
 	public:
 		Character();
 		Character(std::string name);
